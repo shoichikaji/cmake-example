@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "Person.hpp"
+#include "../lib/Person.hpp"
 
 int main(void) {
   Person me("John");

@@ -13,14 +13,32 @@ endif ()
 INCLUDE_DIRECTORIES ("${MY_PREFIX}/include")
 SET (CMAKE_LIBRARY_PATH "${MY_PREFIX}/lib")
 
-FILE (GLOB SRCS src/*.cpp src/*.c)
+SET (BIN_FILE
+  bin/main.cpp
+)
+FILE (GLOB LIB_FILES
+  lib/*.cpp lib/*/*.cpp lib/*/*/*.cpp
+  lib/*.c   lib/*/*.c   lib/*/*/*.c
+)
+FILE (GLOB TEST_FILES
+  t/picotest/picotest.c
+  t/runner.cpp
+  t/test_*.cpp
+)
 
-SET (WARNING_FLAGS "-Wall -Wextra -Werror")
+SET (WARNING_FLAGS   "-Wall -Wextra -Werror")
 SET (CMAKE_C_FLAGS   "-O2 -g ${WARNING_FLAGS} ${CMAKE_C_FLAGS}")
 SET (CMAKE_CXX_FLAGS "-O2 -g ${WARNING_FLAGS} ${CMAKE_CXX_FLAGS}")
 
-ADD_EXECUTABLE (main ${SRCS})
+ADD_LIBRARY (person SHARED ${LIB_FILES})
+# ADD_LIBRARY (person STATIC ${LIB_FILES})
+ADD_EXECUTABLE (runner ${TEST_FILES})
+ADD_EXECUTABLE (main ${BIN_FILE})
+TARGET_LINK_LIBRARIES (runner person)
+TARGET_LINK_LIBRARIES (main person)
+
+ADD_CUSTOM_TARGET (check prove ./runner DEPENDS runner)
 
 # example of linking library
-FIND_LIBRARY (ATS_LIBRARY atscppapi REQUIRED)
-TARGET_LINK_LIBRARIES (main ${ATS_LIBRARY})
+# FIND_LIBRARY (ATS_LIBRARY atscppapi REQUIRED)
+# TARGET_LINK_LIBRARIES (main ${ATS_LIBRARY})

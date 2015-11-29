@@ -6,9 +6,9 @@
 class Person {
 public:
   explicit Person(const std::string& name);
-  ~Person();
+  virtual ~Person();
   const std::string& getName();
-private:
+protected:
   std::string m_name;
 };
 

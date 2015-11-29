@@ -24,7 +24,7 @@ FILE (GLOB TEST_FILES
   t/test_*.cpp
 )
 
-SET (WARNING_FLAGS   "-Wall -Wextra -Werror")
+SET (WARNING_FLAGS   "-Wall -Werror")
 SET (CMAKE_C_FLAGS   "-O2 -g ${WARNING_FLAGS} ${CMAKE_C_FLAGS}")
 SET (CMAKE_CXX_FLAGS "-O2 -g ${WARNING_FLAGS} ${CMAKE_CXX_FLAGS}")
 

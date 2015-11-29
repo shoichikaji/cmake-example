@@ -13,7 +13,7 @@ endif ()
 INCLUDE_DIRECTORIES ("${MY_PREFIX}/include")
 SET (CMAKE_LIBRARY_PATH "${MY_PREFIX}/lib")
 
-FILE (GLOB SRCS src/*.cpp src*.c)
+FILE (GLOB SRCS src/*.cpp src/*.c)
 
 SET (WARNING_FLAGS "-Wall -Wextra -Werror")
 SET (CMAKE_C_FLAGS   "-O2 -g ${WARNING_FLAGS} ${CMAKE_C_FLAGS}")

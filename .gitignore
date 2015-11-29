@@ -12,4 +12,4 @@ install_manifest.txt
 *.dylib
 CTestTestfile.cmake
 /Testing
-runner
+/test_*

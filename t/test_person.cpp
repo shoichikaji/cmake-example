@@ -1,7 +1,8 @@
 #include "../lib/Person.hpp"
 #include "picotest/picotest.h"
 
-void test_person(void) {
+int main(void) {
   Person p("foo");
   ok( p.getName() == "foo" );
+  return done_testing();
 }

@@ -13,16 +13,14 @@ endif ()
 INCLUDE_DIRECTORIES ("${MY_PREFIX}/include")
 SET (CMAKE_LIBRARY_PATH "${MY_PREFIX}/lib")
 
-SET (BIN_FILE
-  bin/main.cpp
+FILE (GLOB BIN_FILES
+  bin/*.cpp
 )
 FILE (GLOB LIB_FILES
   lib/*.cpp lib/*/*.cpp lib/*/*/*.cpp
   lib/*.c   lib/*/*.c   lib/*/*/*.c
 )
 FILE (GLOB TEST_FILES
-  t/picotest/picotest.c
-  t/runner.cpp
   t/test_*.cpp
 )
 
@@ -32,12 +30,18 @@ SET (CMAKE_CXX_FLAGS "-O2 -g ${WARNING_FLAGS} ${CMAKE_CXX_FLAGS}")
 
 # ADD_LIBRARY (person SHARED ${LIB_FILES})
 ADD_LIBRARY (person STATIC ${LIB_FILES})
-ADD_EXECUTABLE (runner ${TEST_FILES})
-ADD_EXECUTABLE (main ${BIN_FILE})
-TARGET_LINK_LIBRARIES (runner person)
+ADD_EXECUTABLE (main ${BIN_FILES})
 TARGET_LINK_LIBRARIES (main person)
 
-ADD_CUSTOM_TARGET (check prove ./runner DEPENDS runner)
+ADD_CUSTOM_TARGET (check prove ./test_*)
+FOREACH (TEST_FILE ${TEST_FILES})
+  GET_FILENAME_COMPONENT (N ${TEST_FILE} NAME_WE)
+  ADD_EXECUTABLE (${N} ${TEST_FILE} t/picotest/picotest.c)
+  TARGET_LINK_LIBRARIES (${N} person)
+  ADD_DEPENDENCIES (check ${N})
+ENDFOREACH ()
+
+# INSTALL (TARGETS main DESTINATION bin)
 
 # example of linking library
 # FIND_LIBRARY (ATS_LIBRARY atscppapi REQUIRED)

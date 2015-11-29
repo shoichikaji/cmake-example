@@ -41,6 +41,18 @@ FOREACH (TEST_FILE ${TEST_FILES})
   ADD_DEPENDENCIES (check ${N})
 ENDFOREACH ()
 
+SET (REMOVE_ITEM
+  CMakeCache.txt
+  CMakeFiles/
+  Makefile
+  cmake_install.cmake
+  config.hpp
+  libperson.a
+  test_man
+  test_person
+)
+ADD_CUSTOM_TARGET (realclean rm -rf ${REMOVE_ITEM})
+
 # INSTALL (TARGETS main DESTINATION bin)
 
 # example of linking library
